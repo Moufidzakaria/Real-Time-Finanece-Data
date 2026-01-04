@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import fetch from 'node-fetch';
 import Redis from 'ioredis';
 import cron from 'node-cron';
 
@@ -54,13 +55,14 @@ CoinSchema.index({ market_cap: -1 });
 
 const Coin = mongoose.model<ICoin>('Coin', CoinSchema);
 
-/* ================== REDIS (SAFE) ================== */
-const redis = process.env.REDIS_URL
-  ? new Redis(process.env.REDIS_URL)
-  : null;
-
-redis?.on('connect', () => console.log('✅ Redis connected'));
-redis?.on('error', err => console.error('❌ Redis error', err));
+/* ================== REDIS (Upstash) ================== */
+let redis: Redis | null = null;
+if (process.env.UPSTASH_REDIS_REST_URL) {
+  redis = new Redis(process.env.UPSTASH_REDIS_REST_URL, {
+    password: process.env.UPSTASH_REDIS_REST_TOKEN,
+    tls: {},
+  });
+}
 
 /* ================== API KEY ================== */
 const apiKeyMiddleware = (req: Request, res: Response, next: NextFunction) => {
@@ -70,12 +72,12 @@ const apiKeyMiddleware = (req: Request, res: Response, next: NextFunction) => {
 };
 
 /* ================== UTILS ================== */
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
 /* ================== FETCH COINS ================== */
 async function fetchCoins(): Promise<number> {
   const coins: ICoin[] = [];
-  const totalPages = 90;
+  const totalPages = 90; // تقريباً 8900 coins
 
   for (let page = 1; page <= totalPages; page++) {
     const url =
@@ -83,40 +85,49 @@ async function fetchCoins(): Promise<number> {
       `?vs_currency=usd&order=market_cap_desc&per_page=100&page=${page}` +
       `&sparkline=false&price_change_percentage=1h,24h`;
 
-    try {
-      const res = await fetch(url);
-      if (!res.ok) break;
+    let success = false;
+    let attempts = 0;
 
-      const data = await res.json();
-      if (!data.length) break;
+    while (!success && attempts < 5) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Blocked or error on page ${page}`);
 
-      coins.push(
-        ...data.map((c: any) => ({
-          name: c.name,
-          symbol: c.symbol,
-          price: c.current_price,
-          change_1h: c.price_change_percentage_1h_in_currency ?? 0,
-          change_24h: c.price_change_percentage_24h ?? 0,
-          market_cap: c.market_cap,
-          volume_24h: c.total_volume,
-          circulating_supply: c.circulating_supply,
-        }))
-      );
+        const data = (await res.json()) as any[];
+        if (!data.length) {
+          console.log(`⚠️ Page ${page} empty, stopping`);
+          success = true;
+          break;
+        }
 
-      console.log(`✅ Page ${page}`);
-      await sleep(1500);
-    } catch (err) {
-      console.warn(`⚠️ Page ${page} skipped`);
-      await sleep(5000);
+        coins.push(
+          ...data.map(c => ({
+            name: c.name,
+            symbol: c.symbol,
+            price: c.current_price,
+            change_1h: c.price_change_percentage_1h_in_currency ?? 0,
+            change_24h: c.price_change_percentage_24h ?? 0,
+            market_cap: c.market_cap,
+            volume_24h: c.total_volume,
+            circulating_supply: c.circulating_supply,
+          }))
+        );
+
+        console.log(`✅ Page ${page} fetched`);
+        await sleep(1500);
+        success = true;
+      } catch (err) {
+        attempts++;
+        console.warn(`⚠️ Page ${page} failed, attempt ${attempts}, retry in 5s`);
+        await sleep(5000);
+      }
     }
   }
 
   await Coin.deleteMany({});
   await Coin.insertMany(coins);
 
-  if (redis) {
-    await redis.set('coins_all', JSON.stringify(coins), 'EX', 300);
-  }
+  if (redis) await redis.set('coins_all', JSON.stringify(coins), 'EX', 300);
 
   console.log(`🔥 ${coins.length} coins saved`);
   return coins.length;
@@ -124,16 +135,16 @@ async function fetchCoins(): Promise<number> {
 
 /* ================== CRON ================== */
 cron.schedule('*/10 * * * *', async () => {
-  console.log('⏱ Cron started');
+  console.log('⏱ Cron update started...');
   await fetchCoins();
 });
 
 /* ================== ROUTES ================== */
-app.get('/health', (_req, res) => {
+app.get('/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok' });
 });
 
-app.get('/coins', apiKeyMiddleware, async (req, res) => {
+app.get('/coins', apiKeyMiddleware, async (req: Request, res: Response) => {
   const page = Number(req.query.page) || 1;
   const limit = Number(req.query.limit) || 100;
   const skip = (page - 1) * limit;
@@ -146,7 +157,48 @@ app.get('/coins', apiKeyMiddleware, async (req, res) => {
   res.json({ page, limit, count: coins.length, data: coins });
 });
 
+app.get('/admin/fetch-now', async (_req: Request, res: Response) => {
+  const count = await fetchCoins();
+  res.json({ message: 'Fetch completed', count });
+});
+
+app.get('/admin/coins/all', async (_req: Request, res: Response) => {
+  const coins = await Coin.find({});
+  res.json({ count: coins.length, data: coins });
+});
+
+app.get('/admin/count', async (_req: Request, res: Response) => {
+  const count = await Coin.countDocuments();
+  res.json({ count });
+});
+
+/* ================== SEARCH / GET COIN ================== */
+app.get('/coins/search', async (req: Request, res: Response) => {
+  try {
+    const { id, name } = req.query;
+
+    if (!id && !name) {
+      return res.status(400).json({ error: 'Provide either id or name query parameter' });
+    }
+
+    let coin;
+    if (id) {
+      coin = await Coin.findById(id as string);
+      if (!coin) return res.status(404).json({ error: 'Coin not found by id' });
+    } else if (name) {
+      const regex = new RegExp(`^${name}`, 'i');
+      coin = await Coin.find({ name: regex }).limit(10);
+      if (!coin.length) return res.status(404).json({ error: 'Coin not found by name' });
+    }
+
+    res.json({ data: coin });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 /* ================== START SERVER ================== */
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
