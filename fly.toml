@@ -1,5 +1,24 @@
-app = "real-time-finance-data"  # <= obligatoire
-primary_region = "cdg"
+app = "real-time-finance-data"
+kill_signal = "SIGINT"
+kill_timeout = 5
 
 [build]
-  dockerfile = "./Dockerfile"
+  builder = "heroku/buildpacks:20"
+
+[env]
+  NODE_ENV = "production"
+
+[experimental]
+  auto_rollback = true
+
+[[services]]
+  internal_port = 5000
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
