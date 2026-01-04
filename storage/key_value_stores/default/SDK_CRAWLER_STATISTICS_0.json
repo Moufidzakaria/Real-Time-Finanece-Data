@@ -1,0 +1,52 @@
+{
+  "requestsFinished": 0,
+  "requestsFailed": 1,
+  "requestsRetries": 1,
+  "requestsFailedPerMinute": 0,
+  "requestsFinishedPerMinute": 0,
+  "requestMinDurationMillis": null,
+  "requestMaxDurationMillis": 0,
+  "requestTotalFailedDurationMillis": 61523,
+  "requestTotalFinishedDurationMillis": 0,
+  "crawlerStartedAt": "2025-12-31T16:03:47.055Z",
+  "crawlerFinishedAt": "2025-12-31T16:07:52.625Z",
+  "statsPersistedAt": "2025-12-31T16:07:52.625Z",
+  "crawlerRuntimeMillis": 245724,
+  "crawlerLastStartTimestamp": 1767197026901,
+  "requestRetryHistogram": [
+    null,
+    null,
+    null,
+    1
+  ],
+  "statsId": 0,
+  "requestAvgFailedDurationMillis": 61523,
+  "requestAvgFinishedDurationMillis": null,
+  "requestTotalDurationMillis": 61523,
+  "requestsTotal": 1,
+  "requestsWithStatusCode": {
+    "200": 4
+  },
+  "errors": {
+    "/home/zakaria/Desktop/crypto/crypto/node_modules/@apify/src/index.ts:88:74": {
+      "missing error code": {
+        "Error": {
+          "requestHandler timed out after 60 seconds.": {
+            "count": 1
+          }
+        }
+      }
+    }
+  },
+  "retryErrors": {
+    "/home/zakaria/Desktop/crypto/crypto/node_modules/@apify/src/index.ts:88:74": {
+      "missing error code": {
+        "Error": {
+          "requestHandler timed out after 60 seconds.": {
+            "count": 3
+          }
+        }
+      }
+    }
+  }
+}

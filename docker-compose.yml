@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  crypto-server:
+    build: .
+    ports:
+      - "5001:5001"
+    environment:
+      PORT: 5001
+      API_KEY: super_secret_key
+      MONGO_URI: mongodb+srv://crypto:CryptoMoniye@cluster0.dadg1l8.mongodb.net/crypto?retryWrites=true&w=majority
+      UPSTASH_REDIS_REST_URL: "https://well-imp-5878.upstash.io"
+      UPSTASH_REDIS_REST_TOKEN: "ARb2AAImcDJlZjRmNzRhNTVkZjY0ZTJkYWU0NzI4ZGQ5MWFkMGRmMXAyNTg3OA"
+    restart: always

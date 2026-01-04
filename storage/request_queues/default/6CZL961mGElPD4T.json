@@ -1,0 +1,9 @@
+{
+	"id": "6CZL961mGElPD4T",
+	"json": "{\"id\":\"6CZL961mGElPD4T\",\"url\":\"https://coinmarketcap.com/\",\"loadedUrl\":\"https://coinmarketcap.com/\",\"uniqueKey\":\"https://coinmarketcap.com\",\"method\":\"GET\",\"noRetry\":false,\"retryCount\":3,\"errorMessages\":[\"Error: requestHandler timed out after 60 seconds.\\n    at Timeout._onTimeout (/home/zakaria/Desktop/crypto/crypto/node_modules/@apify/src/index.ts:88:74)\\n    at listOnTimeout (node:internal/timers:588:17)\\n    at process.processTimers (node:internal/timers:523:7)\",\"Error: requestHandler timed out after 60 seconds.\\n    at Timeout._onTimeout (/home/zakaria/Desktop/crypto/crypto/node_modules/@apify/src/index.ts:88:74)\\n    at listOnTimeout (node:internal/timers:588:17)\\n    at process.processTimers (node:internal/timers:523:7)\",\"Error: requestHandler timed out after 60 seconds.\\n    at Timeout._onTimeout (/home/zakaria/Desktop/crypto/crypto/node_modules/@apify/src/index.ts:88:74)\\n    at listOnTimeout (node:internal/timers:588:17)\\n    at process.processTimers (node:internal/timers:523:7)\",\"Error: requestHandler timed out after 60 seconds.\\n    at Timeout._onTimeout (/home/zakaria/Desktop/crypto/crypto/node_modules/@apify/src/index.ts:88:74)\\n    at listOnTimeout (node:internal/timers:588:17)\\n    at process.processTimers (node:internal/timers:523:7)\"],\"headers\":{},\"userData\":{\"__crawlee\":{\"state\":5}},\"handledAt\":\"2025-12-31T16:07:52.441Z\"}",
+	"method": "GET",
+	"orderNo": null,
+	"retryCount": 3,
+	"uniqueKey": "https://coinmarketcap.com",
+	"url": "https://coinmarketcap.com/"
+}

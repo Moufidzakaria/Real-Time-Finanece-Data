@@ -1,0 +1,251 @@
+import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import fetch from 'node-fetch';
+import Redis from 'ioredis';
+import cron from 'node-cron';
+
+dotenv.config();
+
+const app = express();
+const PORT = Number(process.env.PORT) || 5001;
+
+/* ================== MIDDLEWARE ================== */
+app.use(cors());
+app.use(helmet());
+app.use(express.json());
+app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
+
+/* ================== MONGODB ================== */
+mongoose
+  .connect(process.env.MONGO_URI as string)
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch(err => {
+    console.error('❌ MongoDB error:', err);
+    process.exit(1);
+  });
+
+/* ================== MODEL ================== */
+interface ICoin {
+  name: string;
+  symbol: string;
+  price: number;
+  change_1h: number;
+  change_24h: number;
+  market_cap: number;
+  volume_24h: number;
+  circulating_supply: number;
+}
+
+const CoinSchema = new mongoose.Schema<ICoin>({
+  name: String,
+  symbol: String,
+  price: Number,
+  change_1h: Number,
+  change_24h: Number,
+  market_cap: Number,
+  volume_24h: Number,
+  circulating_supply: Number,
+});
+
+CoinSchema.index({ market_cap: -1 });
+
+const Coin = mongoose.model<ICoin>('Coin', CoinSchema);
+
+/* ================== REDIS ================== */
+const redis = process.env.UPSTASH_REDIS_URL
+  ? new Redis(process.env.UPSTASH_REDIS_URL)
+  : null;
+
+/* ================== API KEY ================== */
+const apiKeyMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  const key = req.headers['x-api-key'] || req.query.api_key;
+  if (key === process.env.API_KEY) return next();
+  return res.status(403).json({ error: 'Invalid API Key' });
+};
+
+/* ================== UTILS ================== */
+const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
+
+/* ================== FETCH COINS SAFE ================== */
+async function fetchCoins(): Promise<number> {
+  const coins: ICoin[] = [];
+  const totalPages = 90; // تقريباً 8900 coins
+
+  for (let page = 1; page <= totalPages; page++) {
+    const url =
+      `https://api.coingecko.com/api/v3/coins/markets` +
+      `?vs_currency=usd&order=market_cap_desc&per_page=100&page=${page}` +
+      `&sparkline=false&price_change_percentage=1h,24h`;
+
+    let success = false;
+    let attempts = 0;
+
+    while (!success && attempts < 5) { // retry max 5 مرات
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Blocked or error on page ${page}`);
+
+        const data = (await res.json()) as any[];
+        if (!data.length) {
+          console.log(`⚠️ Page ${page} empty, stopping`);
+          success = true;
+          break;
+        }
+
+        coins.push(
+          ...data.map(c => ({
+            name: c.name,
+            symbol: c.symbol,
+            price: c.current_price,
+            change_1h: c.price_change_percentage_1h_in_currency ?? 0,
+            change_24h: c.price_change_percentage_24h ?? 0,
+            market_cap: c.market_cap,
+            volume_24h: c.total_volume,
+            circulating_supply: c.circulating_supply,
+          }))
+        );
+
+        console.log(`✅ Page ${page} fetched`);
+        await sleep(1500); // delay مهم لتجاوز rate limit
+        success = true;
+      } catch (err) {
+        attempts++;
+        console.warn(`⚠️ Page ${page} failed, attempt ${attempts}, retry in 5s`);
+        await sleep(5000);
+      }
+    }
+  }
+
+  await Coin.deleteMany({});
+  await Coin.insertMany(coins);
+
+  if (redis) await redis.set('coins_all', JSON.stringify(coins), 'EX', 300);
+
+  console.log(`🔥 ${coins.length} coins saved`);
+  return coins.length;
+}
+
+/* ================== CRON ================== */
+cron.schedule('*/10 * * * *', async () => {
+  console.log('⏱ Cron update started...');
+  await fetchCoins();
+});
+
+/* ================== ROUTES ================== */
+app.get('/health', (_req: Request, res: Response) => {
+  res.json({ status: 'ok' });
+});
+
+app.get('/coins', apiKeyMiddleware, async (req: Request, res: Response) => {
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 100;
+  const skip = (page - 1) * limit;
+
+  const coins = await Coin.find({})
+    .sort({ market_cap: -1 })
+    .skip(skip)
+    .limit(limit);
+
+  res.json({ page, limit, count: coins.length, data: coins });
+});
+
+/* ===== ADMIN : FETCH NOW ===== */
+app.get('/admin/fetch-now', async (_req: Request, res: Response) => {
+  const count = await fetchCoins();
+  res.json({ message: 'Fetch completed', count });
+});
+
+/* ===== ADMIN : ALL COINS ===== */
+app.get('/admin/coins/all', async (_req: Request, res: Response) => {
+  const coins = await Coin.find({});
+  res.json({ count: coins.length, data: coins });
+});
+
+/* ===== ADMIN : COUNT ===== */
+app.get('/admin/count', async (_req: Request, res: Response) => {
+  const count = await Coin.countDocuments();
+  res.json({ count });
+});
+
+/* ================== SEARCH / GET COIN ================== */
+app.get('/coins/search',  async (req: Request, res: Response) => {
+  try {
+    const { id, name } = req.query;
+
+    if (!id && !name) {
+      return res.status(400).json({ error: 'Provide either id or name query parameter' });
+    }
+
+    let coin;
+    if (id) {
+      coin = await Coin.findById(id as string);
+      if (!coin) return res.status(404).json({ error: 'Coin not found by id' });
+    } else if (name) {
+      const regex = new RegExp(`^${name}`, 'i'); // recherche insensitive
+      coin = await Coin.find({ name: regex }).limit(10); // max 10 résultats
+      if (!coin.length) return res.status(404).json({ error: 'Coin not found by name' });
+    }
+
+    res.json({ data: coin });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+app.get('/api/external/:coin', async (req: Request, res: Response) => {
+  try {
+    const coin = req.params.coin;
+    const url = `https://api.zyla.com/coins/${coin}`; // exemple Zyla
+    // ou RapidAPI : const url = `https://example-rapidapi.com/coins/${coin}`;
+
+    const response = await fetch(url, {
+      headers: {
+        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY || '',
+        'X-RapidAPI-Host': 'example-rapidapi.com',
+      },
+    });
+
+    if (!response.ok) throw new Error('Failed to fetch external API');
+
+    const data = await response.json();
+    res.json({ data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'External API fetch error' });
+  }
+});
+
+app.get('/coins/details/:coin', apiKeyMiddleware, async (req, res) => {
+  try {
+    const coinName = req.params.coin;
+
+    // 1️⃣ قلق على coin ف MongoDB
+    const localCoin = await Coin.findOne({ name: new RegExp(`^${coinName}`, 'i') });
+    if (!localCoin) return res.status(404).json({ error: 'Coin not found locally' });
+
+    // 2️⃣ fetch من Zyla API
+    const response = await fetch(`https://api.zyla.com/coins/${coinName}`, {
+      headers: {
+        'X-RapidAPI-Key': process.env.RAPIDAPI_KEY || '',
+        'X-RapidAPI-Host': 'example-rapidapi.com',
+      },
+    });
+    const externalData = await response.json();
+
+    res.json({ local: localCoin, external: externalData });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+/* ================== START SERVER ================== */
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});

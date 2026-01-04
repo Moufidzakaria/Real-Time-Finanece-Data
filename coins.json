@@ -1,0 +1,1002 @@
+[
+  {
+    "name": "Bitcoin",
+    "symbol": "btc",
+    "price": 87741,
+    "change_1h": "-0.12%",
+    "change_24h": "-1.42%",
+    "market_cap": 1752382270762,
+    "volume_24h": 31198193600,
+    "circulating_supply": 19970040
+  },
+  {
+    "name": "Ethereum",
+    "symbol": "eth",
+    "price": 2975.93,
+    "change_1h": "-0.29%",
+    "change_24h": "-1.19%",
+    "market_cap": 359164038824,
+    "volume_24h": 13352458299,
+    "circulating_supply": 120694902.9782912
+  },
+  {
+    "name": "Tether",
+    "symbol": "usdt",
+    "price": 0.998708,
+    "change_1h": "-0.00%",
+    "change_24h": "-0.01%",
+    "market_cap": 186866172223,
+    "volume_24h": 50169243136,
+    "circulating_supply": 187105543452.2622
+  },
+  {
+    "name": "BNB",
+    "symbol": "bnb",
+    "price": 857.73,
+    "change_1h": "0.01%",
+    "change_24h": "-1.45%",
+    "market_cap": 118139105378,
+    "volume_24h": 1457087690,
+    "circulating_supply": 137734546.4
+  },
+  {
+    "name": "XRP",
+    "symbol": "xrp",
+    "price": 1.86,
+    "change_1h": "0.32%",
+    "change_24h": "-1.05%",
+    "market_cap": 112583290528,
+    "volume_24h": 1907835423,
+    "circulating_supply": 60676393849
+  },
+  {
+    "name": "USDC",
+    "symbol": "usdc",
+    "price": 0.999744,
+    "change_1h": "0.00%",
+    "change_24h": "-0.04%",
+    "market_cap": 75223135653,
+    "volume_24h": 7870063437,
+    "circulating_supply": 75242324055.71907
+  },
+  {
+    "name": "Solana",
+    "symbol": "sol",
+    "price": 124.57,
+    "change_1h": "-0.16%",
+    "change_24h": "-1.67%",
+    "market_cap": 70158701856,
+    "volume_24h": 3539087892,
+    "circulating_supply": 563156094.3280042
+  },
+  {
+    "name": "TRON",
+    "symbol": "trx",
+    "price": 0.284005,
+    "change_1h": "-0.07%",
+    "change_24h": "0.50%",
+    "market_cap": 26892615146,
+    "volume_24h": 383819524,
+    "circulating_supply": 94692517583.61188
+  },
+  {
+    "name": "Lido Staked Ether",
+    "symbol": "steth",
+    "price": 2976.59,
+    "change_1h": "-0.15%",
+    "change_24h": "-1.04%",
+    "market_cap": 26251753972,
+    "volume_24h": 5035313,
+    "circulating_supply": 8819395.175897667
+  },
+  {
+    "name": "Dogecoin",
+    "symbol": "doge",
+    "price": 0.120703,
+    "change_1h": "0.10%",
+    "change_24h": "-2.08%",
+    "market_cap": 20291731117,
+    "volume_24h": 1158815566,
+    "circulating_supply": 168124303126.579
+  },
+  {
+    "name": "Figure Heloc",
+    "symbol": "figr_heloc",
+    "price": 1.029,
+    "change_1h": "0.12%",
+    "change_24h": "-1.20%",
+    "market_cap": 14821158692,
+    "volume_24h": 5813158,
+    "circulating_supply": 14404436892.335
+  },
+  {
+    "name": "Cardano",
+    "symbol": "ada",
+    "price": 0.342516,
+    "change_1h": "0.94%",
+    "change_24h": "-1.78%",
+    "market_cap": 12560322858,
+    "volume_24h": 614787174,
+    "circulating_supply": 36669617499.12329
+  },
+  {
+    "name": "WhiteBIT Coin",
+    "symbol": "wbt",
+    "price": 56.52,
+    "change_1h": "-0.06%",
+    "change_24h": "-1.39%",
+    "market_cap": 12098896103,
+    "volume_24h": 41459616,
+    "circulating_supply": 214053418
+  },
+  {
+    "name": "Bitcoin Cash",
+    "symbol": "bch",
+    "price": 590.96,
+    "change_1h": "-0.21%",
+    "change_24h": "-0.93%",
+    "market_cap": 11804779374,
+    "volume_24h": 239082672,
+    "circulating_supply": 19974884.27165078
+  },
+  {
+    "name": "Wrapped stETH",
+    "symbol": "wsteth",
+    "price": 3640.06,
+    "change_1h": "-0.17%",
+    "change_24h": "-1.21%",
+    "market_cap": 11633147033,
+    "volume_24h": 14928482,
+    "circulating_supply": 3195645.809607179
+  },
+  {
+    "name": "Wrapped Bitcoin",
+    "symbol": "wbtc",
+    "price": 87334,
+    "change_1h": "-0.18%",
+    "change_24h": "-1.74%",
+    "market_cap": 10912648296,
+    "volume_24h": 80546909,
+    "circulating_supply": 124963.48883569
+  },
+  {
+    "name": "Wrapped Beacon ETH",
+    "symbol": "wbeth",
+    "price": 3234.67,
+    "change_1h": "-0.14%",
+    "change_24h": "-1.22%",
+    "market_cap": 10559610043,
+    "volume_24h": 2829909,
+    "circulating_supply": 3264505.830910419
+  },
+  {
+    "name": "Wrapped eETH",
+    "symbol": "weeth",
+    "price": 3227.28,
+    "change_1h": "-0.13%",
+    "change_24h": "-1.02%",
+    "market_cap": 9182615144,
+    "volume_24h": 4557308,
+    "circulating_supply": 2844266.581997522
+  },
+  {
+    "name": "USDS",
+    "symbol": "usds",
+    "price": 0.999585,
+    "change_1h": "0.00%",
+    "change_24h": "0.00%",
+    "market_cap": 9180933708,
+    "volume_24h": 1746835,
+    "circulating_supply": 9184788302.988375
+  },
+  {
+    "name": "Binance Bridged USDT (BNB Smart Chain)",
+    "symbol": "bsc-usd",
+    "price": 0.998252,
+    "change_1h": "-0.02%",
+    "change_24h": "-0.09%",
+    "market_cap": 8970456084,
+    "volume_24h": 871204076,
+    "circulating_supply": 8984992892.453934
+  },
+  {
+    "name": "LEO Token",
+    "symbol": "leo",
+    "price": 9.51,
+    "change_1h": "-0.17%",
+    "change_24h": "1.60%",
+    "market_cap": 8765423733,
+    "volume_24h": 894355,
+    "circulating_supply": 921740886.9
+  },
+  {
+    "name": "Chainlink",
+    "symbol": "link",
+    "price": 12.28,
+    "change_1h": "0.36%",
+    "change_24h": "-1.65%",
+    "market_cap": 8694990980,
+    "volume_24h": 291150640,
+    "circulating_supply": 708099970.4525867
+  },
+  {
+    "name": "Zcash",
+    "symbol": "zec",
+    "price": 524.71,
+    "change_1h": "-1.47%",
+    "change_24h": "3.36%",
+    "market_cap": 8641624363,
+    "volume_24h": 428366136,
+    "circulating_supply": 16472884.5405448
+  },
+  {
+    "name": "WETH",
+    "symbol": "weth",
+    "price": 2975.61,
+    "change_1h": "-0.13%",
+    "change_24h": "-1.27%",
+    "market_cap": 7855594551,
+    "volume_24h": 91879812,
+    "circulating_supply": 2639906.312183972
+  },
+  {
+    "name": "Monero",
+    "symbol": "xmr",
+    "price": 423.44,
+    "change_1h": "0.20%",
+    "change_24h": "-2.96%",
+    "market_cap": 7822286667,
+    "volume_24h": 57769660,
+    "circulating_supply": 18446744.07370955
+  },
+  {
+    "name": "Stellar",
+    "symbol": "xlm",
+    "price": 0.205665,
+    "change_1h": "0.68%",
+    "change_24h": "-0.86%",
+    "market_cap": 6658328529,
+    "volume_24h": 134358205,
+    "circulating_supply": 32385007176.23866
+  },
+  {
+    "name": "Coinbase Wrapped BTC",
+    "symbol": "cbbtc",
+    "price": 87744,
+    "change_1h": "-0.03%",
+    "change_24h": "-1.39%",
+    "market_cap": 6632071803,
+    "volume_24h": 150691170,
+    "circulating_supply": 75577.6226468
+  },
+  {
+    "name": "Ethena USDe",
+    "symbol": "usde",
+    "price": 0.998146,
+    "change_1h": "-0.00%",
+    "change_24h": "-0.06%",
+    "market_cap": 6287966107,
+    "volume_24h": 64473023,
+    "circulating_supply": 6299674949.043636
+  },
+  {
+    "name": "Canton",
+    "symbol": "cc",
+    "price": 0.168666,
+    "change_1h": "-3.19%",
+    "change_24h": "14.75%",
+    "market_cap": 6195312438,
+    "volume_24h": 52566661,
+    "circulating_supply": 36847175735.1574
+  },
+  {
+    "name": "Hyperliquid",
+    "symbol": "hype",
+    "price": 25.5,
+    "change_1h": "-0.66%",
+    "change_24h": "-2.43%",
+    "market_cap": 6077923294,
+    "volume_24h": 159256357,
+    "circulating_supply": 238385315.9541414
+  },
+  {
+    "name": "Litecoin",
+    "symbol": "ltc",
+    "price": 77.99,
+    "change_1h": "0.52%",
+    "change_24h": "-0.22%",
+    "market_cap": 5981341330,
+    "volume_24h": 309276813,
+    "circulating_supply": 76687670.73347135
+  },
+  {
+    "name": "Sui",
+    "symbol": "sui",
+    "price": 1.41,
+    "change_1h": "0.37%",
+    "change_24h": "-2.44%",
+    "market_cap": 5352801784,
+    "volume_24h": 416859912,
+    "circulating_supply": 3792183074.773887
+  },
+  {
+    "name": "Avalanche",
+    "symbol": "avax",
+    "price": 12.4,
+    "change_1h": "0.47%",
+    "change_24h": "-1.31%",
+    "market_cap": 5329295776,
+    "volume_24h": 222117264,
+    "circulating_supply": 429700243.2094724
+  },
+  {
+    "name": "Hedera",
+    "symbol": "hbar",
+    "price": 0.108686,
+    "change_1h": "0.92%",
+    "change_24h": "-0.60%",
+    "market_cap": 4651371285,
+    "volume_24h": 111493890,
+    "circulating_supply": 42776708614.50251
+  },
+  {
+    "name": "USDT0",
+    "symbol": "usdt0",
+    "price": 0.998537,
+    "change_1h": "0.03%",
+    "change_24h": "-0.02%",
+    "market_cap": 4449906787,
+    "volume_24h": 184165335,
+    "circulating_supply": 4458011759.915287
+  },
+  {
+    "name": "Dai",
+    "symbol": "dai",
+    "price": 0.998397,
+    "change_1h": "-0.16%",
+    "change_24h": "-0.08%",
+    "market_cap": 4208312431,
+    "volume_24h": 45832487,
+    "circulating_supply": 4215034166.28641
+  },
+  {
+    "name": "Shiba Inu",
+    "symbol": "shib",
+    "price": 0.00000706,
+    "change_1h": "0.74%",
+    "change_24h": "-0.59%",
+    "market_cap": 4157826061,
+    "volume_24h": 99330069,
+    "circulating_supply": 589244066059953.1
+  },
+  {
+    "name": "sUSDS",
+    "symbol": "susds",
+    "price": 1.078,
+    "change_1h": "-0.09%",
+    "change_24h": "-0.69%",
+    "market_cap": 4062112440,
+    "volume_24h": 7211449,
+    "circulating_supply": 3764049482.053053
+  },
+  {
+    "name": "Toncoin",
+    "symbol": "ton",
+    "price": 1.68,
+    "change_1h": "-0.21%",
+    "change_24h": "2.25%",
+    "market_cap": 4054842811,
+    "volume_24h": 103142583,
+    "circulating_supply": 2416208104.2857
+  },
+  {
+    "name": "World Liberty Financial",
+    "symbol": "wlfi",
+    "price": 0.14553,
+    "change_1h": "0.15%",
+    "change_24h": "1.02%",
+    "market_cap": 3964673266,
+    "volume_24h": 53473107,
+    "circulating_supply": 27243802538.151154
+  },
+  {
+    "name": "PayPal USD",
+    "symbol": "pyusd",
+    "price": 0.999599,
+    "change_1h": "-0.01%",
+    "change_24h": "-0.03%",
+    "market_cap": 3607819215,
+    "volume_24h": 50453335,
+    "circulating_supply": 3609462920.09234
+  },
+  {
+    "name": "Uniswap",
+    "symbol": "uni",
+    "price": 5.67,
+    "change_1h": "0.44%",
+    "change_24h": "-4.09%",
+    "market_cap": 3570535445,
+    "volume_24h": 259797179,
+    "circulating_supply": 629827794.0488548
+  },
+  {
+    "name": "Cronos",
+    "symbol": "cro",
+    "price": 0.091102,
+    "change_1h": "0.21%",
+    "change_24h": "-1.93%",
+    "market_cap": 3514241882,
+    "volume_24h": 19505869,
+    "circulating_supply": 38580039563.61132
+  },
+  {
+    "name": "Ethena Staked USDe",
+    "symbol": "susde",
+    "price": 1.21,
+    "change_1h": "-0.01%",
+    "change_24h": "-0.02%",
+    "market_cap": 3467416074,
+    "volume_24h": 7323057,
+    "circulating_supply": 2862939097.265097
+  },
+  {
+    "name": "USD1",
+    "symbol": "usd1",
+    "price": 0.999893,
+    "change_1h": "0.02%",
+    "change_24h": "0.01%",
+    "market_cap": 3313648733,
+    "volume_24h": 1379790243,
+    "circulating_supply": 3313374653.758066
+  },
+  {
+    "name": "Mantle",
+    "symbol": "mnt",
+    "price": 0.961238,
+    "change_1h": "-0.51%",
+    "change_24h": "-0.85%",
+    "market_cap": 3129216729,
+    "volume_24h": 36047166,
+    "circulating_supply": 3252944055.636841
+  },
+  {
+    "name": "Polkadot",
+    "symbol": "dot",
+    "price": 1.85,
+    "change_1h": "1.39%",
+    "change_24h": "0.68%",
+    "market_cap": 3047046117,
+    "volume_24h": 131287413,
+    "circulating_supply": 1651049891.987445
+  },
+  {
+    "name": "MemeCore",
+    "symbol": "m",
+    "price": 1.65,
+    "change_1h": "1.79%",
+    "change_24h": "3.70%",
+    "market_cap": 2841209429,
+    "volume_24h": 13326473,
+    "circulating_supply": 1719365212.745184
+  },
+  {
+    "name": "Rain",
+    "symbol": "rain",
+    "price": 0.00796767,
+    "change_1h": "-0.18%",
+    "change_24h": "-1.53%",
+    "market_cap": 2706612782,
+    "volume_24h": 63153216,
+    "circulating_supply": 339632824965.07697
+  },
+  {
+    "name": "Bitget Token",
+    "symbol": "bgb",
+    "price": 3.48,
+    "change_1h": "-0.01%",
+    "change_24h": "-0.42%",
+    "market_cap": 2438487686,
+    "volume_24h": 30241510,
+    "circulating_supply": 699992035.9787906
+  },
+  {
+    "name": "OKB",
+    "symbol": "okb",
+    "price": 109.78,
+    "change_1h": "0.09%",
+    "change_24h": "0.60%",
+    "market_cap": 2305249757,
+    "volume_24h": 19179414,
+    "circulating_supply": 21000000
+  },
+  {
+    "name": "Tether Gold",
+    "symbol": "xaut",
+    "price": 4334.52,
+    "change_1h": "-0.03%",
+    "change_24h": "-0.37%",
+    "market_cap": 2254188158,
+    "volume_24h": 270411737,
+    "circulating_supply": 520089.3
+  },
+  {
+    "name": "Aave",
+    "symbol": "aave",
+    "price": 145.18,
+    "change_1h": "0.15%",
+    "change_24h": "-2.91%",
+    "market_cap": 2204111950,
+    "volume_24h": 156911576,
+    "circulating_supply": 15180457.68199336
+  },
+  {
+    "name": "Falcon USD",
+    "symbol": "usdf",
+    "price": 0.997583,
+    "change_1h": "0.08%",
+    "change_24h": "-0.02%",
+    "market_cap": 2163856103,
+    "volume_24h": 401337,
+    "circulating_supply": 2169375076.348739
+  },
+  {
+    "name": "Bittensor",
+    "symbol": "tao",
+    "price": 223.91,
+    "change_1h": "0.50%",
+    "change_24h": "-0.14%",
+    "market_cap": 2149672614,
+    "volume_24h": 50579134,
+    "circulating_supply": 9597491
+  },
+  {
+    "name": "NEAR Protocol",
+    "symbol": "near",
+    "price": 1.55,
+    "change_1h": "1.73%",
+    "change_24h": "1.83%",
+    "market_cap": 1989550379,
+    "volume_24h": 122675862,
+    "circulating_supply": 1283993075
+  },
+  {
+    "name": "Ethereum Classic",
+    "symbol": "etc",
+    "price": 11.7,
+    "change_1h": "0.98%",
+    "change_24h": "-1.01%",
+    "market_cap": 1812015818,
+    "volume_24h": 55327660,
+    "circulating_supply": 154950277.0318167
+  },
+  {
+    "name": "Binance-Peg WETH",
+    "symbol": "weth",
+    "price": 2977.04,
+    "change_1h": "-0.17%",
+    "change_24h": "-0.70%",
+    "market_cap": 1801131903,
+    "volume_24h": 29070672,
+    "circulating_supply": 604999.9999588211
+  },
+  {
+    "name": "Jito Staked SOL",
+    "symbol": "jitosol",
+    "price": 155.9,
+    "change_1h": "-0.17%",
+    "change_24h": "-1.62%",
+    "market_cap": 1778965049,
+    "volume_24h": 15691643,
+    "circulating_supply": 11406306.48374151
+  },
+  {
+    "name": "Pepe",
+    "symbol": "pepe",
+    "price": 0.00000416,
+    "change_1h": "0.07%",
+    "change_24h": "1.01%",
+    "market_cap": 1749370596,
+    "volume_24h": 187370650,
+    "circulating_supply": 420690000000000
+  },
+  {
+    "name": "BlackRock USD Institutional Digital Liquidity Fund",
+    "symbol": "buidl",
+    "price": 1,
+    "change_1h": "0.00%",
+    "change_24h": "0.00%",
+    "market_cap": 1740375758,
+    "volume_24h": 0,
+    "circulating_supply": 1740375758.230449
+  },
+  {
+    "name": "Pi Network",
+    "symbol": "pi",
+    "price": 0.203394,
+    "change_1h": "-0.04%",
+    "change_24h": "-0.38%",
+    "market_cap": 1703860364,
+    "volume_24h": 6334060,
+    "circulating_supply": 8377357204.342642
+  },
+  {
+    "name": "Aster",
+    "symbol": "aster",
+    "price": 0.698881,
+    "change_1h": "0.32%",
+    "change_24h": "0.69%",
+    "market_cap": 1658635025,
+    "volume_24h": 91092187,
+    "circulating_supply": 2375039672
+  },
+  {
+    "name": "PAX Gold",
+    "symbol": "paxg",
+    "price": 4336.43,
+    "change_1h": "-0.02%",
+    "change_24h": "-0.34%",
+    "market_cap": 1606215429,
+    "volume_24h": 111643779,
+    "circulating_supply": 370506.297
+  },
+  {
+    "name": "Internet Computer",
+    "symbol": "icp",
+    "price": 2.92,
+    "change_1h": "0.24%",
+    "change_24h": "3.93%",
+    "market_cap": 1597049633,
+    "volume_24h": 141671595,
+    "circulating_supply": 546091096.8879863
+  },
+  {
+    "name": "Ethena",
+    "symbol": "ena",
+    "price": 0.20522,
+    "change_1h": "0.28%",
+    "change_24h": "0.11%",
+    "market_cap": 1578882436,
+    "volume_24h": 98769858,
+    "circulating_supply": 7690625000
+  },
+  {
+    "name": "Wrapped SOL",
+    "symbol": "sol",
+    "price": 124.58,
+    "change_1h": "-0.15%",
+    "change_24h": "-1.33%",
+    "market_cap": 1561594427,
+    "volume_24h": 360713511,
+    "circulating_supply": 12528722.24062773
+  },
+  {
+    "name": "Circle USYC",
+    "symbol": "usyc",
+    "price": 1.11,
+    "change_1h": "undefined%",
+    "change_24h": "-0.11%",
+    "market_cap": 1536766521,
+    "volume_24h": 277932,
+    "circulating_supply": 1383416363.106229
+  },
+  {
+    "name": "Global Dollar",
+    "symbol": "usdg",
+    "price": 0.999598,
+    "change_1h": "-0.01%",
+    "change_24h": "-0.01%",
+    "market_cap": 1528730891,
+    "volume_24h": 17303888,
+    "circulating_supply": 1529283030.099653
+  },
+  {
+    "name": "HTX DAO",
+    "symbol": "htx",
+    "price": 0.00000164,
+    "change_1h": "-0.02%",
+    "change_24h": "0.09%",
+    "market_cap": 1525264389,
+    "volume_24h": 8221998,
+    "circulating_supply": 930149437822426.1
+  },
+  {
+    "name": "Jupiter Perpetuals Liquidity Provider Token",
+    "symbol": "jlp",
+    "price": 4.52,
+    "change_1h": "-0.06%",
+    "change_24h": "-0.76%",
+    "market_cap": 1484607050,
+    "volume_24h": 12313735,
+    "circulating_supply": 328266909.40724
+  },
+  {
+    "name": "Midnight",
+    "symbol": "night",
+    "price": 0.086478,
+    "change_1h": "1.01%",
+    "change_24h": "-4.90%",
+    "market_cap": 1432596181,
+    "volume_24h": 46751681,
+    "circulating_supply": 16607399400.63495
+  },
+  {
+    "name": "KuCoin",
+    "symbol": "kcs",
+    "price": 10.74,
+    "change_1h": "0.07%",
+    "change_24h": "-0.67%",
+    "market_cap": 1419548933,
+    "volume_24h": 1231267,
+    "circulating_supply": 132155021.7355671
+  },
+  {
+    "name": "Provenance Blockchain",
+    "symbol": "hash",
+    "price": 0.02625398,
+    "change_1h": "1.17%",
+    "change_24h": "-15.91%",
+    "market_cap": 1389982218,
+    "volume_24h": 1786.4,
+    "circulating_supply": 52943683417
+  },
+  {
+    "name": "Sky",
+    "symbol": "sky",
+    "price": 0.059053,
+    "change_1h": "0.61%",
+    "change_24h": "0.28%",
+    "market_cap": 1356058023,
+    "volume_24h": 7582954,
+    "circulating_supply": 22953102348.406815
+  },
+  {
+    "name": "Worldcoin",
+    "symbol": "wld",
+    "price": 0.4949,
+    "change_1h": "1.18%",
+    "change_24h": "0.29%",
+    "market_cap": 1319961421,
+    "volume_24h": 64874567,
+    "circulating_supply": 2665727082.61671
+  },
+  {
+    "name": "syrupUSDC",
+    "symbol": "syrupusdc",
+    "price": 1.14,
+    "change_1h": "-0.01%",
+    "change_24h": "0.01%",
+    "market_cap": 1319468299,
+    "volume_24h": 4767538,
+    "circulating_supply": 1153424796.644283
+  },
+  {
+    "name": "BFUSD",
+    "symbol": "bfusd",
+    "price": 0.998464,
+    "change_1h": "0.00%",
+    "change_24h": "-0.01%",
+    "market_cap": 1317965471,
+    "volume_24h": 9127600,
+    "circulating_supply": 1320000000
+  },
+  {
+    "name": "Aptos",
+    "symbol": "apt",
+    "price": 1.74,
+    "change_1h": "1.89%",
+    "change_24h": "2.38%",
+    "market_cap": 1299825570,
+    "volume_24h": 176233657,
+    "circulating_supply": 750582780.018831
+  },
+  {
+    "name": "Binance Staked SOL",
+    "symbol": "bnsol",
+    "price": 136.06,
+    "change_1h": "0.02%",
+    "change_24h": "-1.69%",
+    "market_cap": 1297726289,
+    "volume_24h": 2810416,
+    "circulating_supply": 9538183.132966118
+  },
+  {
+    "name": "Binance Bridged USDC (BNB Smart Chain)",
+    "symbol": "usdc",
+    "price": 0.999698,
+    "change_1h": "0.01%",
+    "change_24h": "-0.00%",
+    "market_cap": 1288468810,
+    "volume_24h": 160714046,
+    "circulating_supply": 1288999879.839804
+  },
+  {
+    "name": "Ripple USD",
+    "symbol": "rlusd",
+    "price": 0.999862,
+    "change_1h": "0.03%",
+    "change_24h": "0.02%",
+    "market_cap": 1278035435,
+    "volume_24h": 51628699,
+    "circulating_supply": 1278206224.109238
+  },
+  {
+    "name": "Rocket Pool ETH",
+    "symbol": "reth",
+    "price": 3433.41,
+    "change_1h": "-0.12%",
+    "change_24h": "-0.82%",
+    "market_cap": 1232124664,
+    "volume_24h": 2057129,
+    "circulating_supply": 358878.4587618885
+  },
+  {
+    "name": "Wrapped BNB",
+    "symbol": "wbnb",
+    "price": 857.71,
+    "change_1h": "-0.01%",
+    "change_24h": "-1.42%",
+    "market_cap": 1212784224,
+    "volume_24h": 239322070,
+    "circulating_supply": 1413980.146131168
+  },
+  {
+    "name": "Gate",
+    "symbol": "gt",
+    "price": 10.28,
+    "change_1h": "-0.18%",
+    "change_24h": "-0.96%",
+    "market_cap": 1206325551,
+    "volume_24h": 1662804,
+    "circulating_supply": 117344473.53114802
+  },
+  {
+    "name": "Pump.fun",
+    "symbol": "pump",
+    "price": 0.00203958,
+    "change_1h": "1.78%",
+    "change_24h": "5.99%",
+    "market_cap": 1201811665,
+    "volume_24h": 95373674,
+    "circulating_supply": 590000000000
+  },
+  {
+    "name": "Ondo",
+    "symbol": "ondo",
+    "price": 0.368855,
+    "change_1h": "1.49%",
+    "change_24h": "-1.95%",
+    "market_cap": 1162936345,
+    "volume_24h": 56384987,
+    "circulating_supply": 3159107529
+  },
+  {
+    "name": "Kaspa",
+    "symbol": "kas",
+    "price": 0.04279885,
+    "change_1h": "0.35%",
+    "change_24h": "-2.49%",
+    "market_cap": 1146656975,
+    "volume_24h": 17024566,
+    "circulating_supply": 26777148610.50726
+  },
+  {
+    "name": "Kelp DAO Restaked ETH",
+    "symbol": "rseth",
+    "price": 3156.45,
+    "change_1h": "-0.21%",
+    "change_24h": "-0.71%",
+    "market_cap": 1101666783,
+    "volume_24h": 97670,
+    "circulating_supply": 349082.1998059655
+  },
+  {
+    "name": "Arbitrum",
+    "symbol": "arb",
+    "price": 0.190661,
+    "change_1h": "1.14%",
+    "change_24h": "-0.21%",
+    "market_cap": 1089756796,
+    "volume_24h": 60489619,
+    "circulating_supply": 5719286371
+  },
+  {
+    "name": "POL (ex-MATIC)",
+    "symbol": "pol",
+    "price": 0.100568,
+    "change_1h": "1.03%",
+    "change_24h": "-1.98%",
+    "market_cap": 1061583517,
+    "volume_24h": 51998910,
+    "circulating_supply": 10566465701.46542
+  },
+  {
+    "name": "Filecoin",
+    "symbol": "fil",
+    "price": 1.42,
+    "change_1h": "6.87%",
+    "change_24h": "6.95%",
+    "market_cap": 1043196616,
+    "volume_24h": 125041478,
+    "circulating_supply": 732721996
+  },
+  {
+    "name": "Quant",
+    "symbol": "qnt",
+    "price": 71.48,
+    "change_1h": "0.43%",
+    "change_24h": "1.04%",
+    "market_cap": 1039583340,
+    "volume_24h": 18039270,
+    "circulating_supply": 14544176.164081175
+  },
+  {
+    "name": "Janus Henderson Anemoy AAA CLO Fund",
+    "symbol": "jaaa",
+    "price": 1.02,
+    "change_1h": "0.00%",
+    "change_24h": "0.00%",
+    "market_cap": 1021015553,
+    "volume_24h": 0,
+    "circulating_supply": 1000739568.311342
+  },
+  {
+    "name": "Bridged Wrapped Lido Staked Ether (Scroll)",
+    "symbol": "wsteth",
+    "price": 3636.67,
+    "change_1h": "-0.35%",
+    "change_24h": "-0.49%",
+    "market_cap": 1019920535,
+    "volume_24h": 179.51,
+    "circulating_supply": 281631.423
+  },
+  {
+    "name": "Algorand",
+    "symbol": "algo",
+    "price": 0.114791,
+    "change_1h": "1.36%",
+    "change_24h": "2.06%",
+    "market_cap": 1014717440,
+    "volume_24h": 41995150,
+    "circulating_supply": 8836783047.570421
+  },
+  {
+    "name": "Function FBTC",
+    "symbol": "fbtc",
+    "price": 87831,
+    "change_1h": "-0.57%",
+    "change_24h": "-1.38%",
+    "market_cap": 972590382,
+    "volume_24h": 38719,
+    "circulating_supply": 11054.08242258
+  },
+  {
+    "name": "XDC Network",
+    "symbol": "xdc",
+    "price": 0.050908,
+    "change_1h": "0.25%",
+    "change_24h": "-0.60%",
+    "market_cap": 971334631,
+    "volume_24h": 27245315,
+    "circulating_supply": 19082810911.22
+  },
+  {
+    "name": "Cosmos Hub",
+    "symbol": "atom",
+    "price": 1.97,
+    "change_1h": "1.25%",
+    "change_24h": "0.50%",
+    "market_cap": 957932078,
+    "volume_24h": 29204865,
+    "circulating_supply": 485898559.497457
+  },
+  {
+    "name": "Lombard Staked BTC",
+    "symbol": "lbtc",
+    "price": 87903,
+    "change_1h": "0.10%",
+    "change_24h": "-1.26%",
+    "market_cap": 955309662,
+    "volume_24h": 682608,
+    "circulating_supply": 10867.3701366
+  }
+]
