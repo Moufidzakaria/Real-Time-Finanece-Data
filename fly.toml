@@ -1,0 +1,5 @@
+app = "real-time-finance-data"  # <= obligatoire
+primary_region = "cdg"
+
+[build]
+  dockerfile = "./Dockerfile"
