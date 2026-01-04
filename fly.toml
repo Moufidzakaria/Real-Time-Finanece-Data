@@ -12,13 +12,14 @@ kill_timeout = 5
   auto_rollback = true
 
 [[services]]
-  internal_port = 5000
+  internal_port = 5001
   protocol = "tcp"
 
   [[services.ports]]
     port = 80
     handlers = ["http"]
 
+  internal_port = 5001
   [[services.ports]]
     port = 443
     handlers = ["tls", "http"]
