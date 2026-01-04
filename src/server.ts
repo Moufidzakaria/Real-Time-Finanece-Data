@@ -56,8 +56,11 @@ CoinSchema.index({ market_cap: -1 });
 const Coin = mongoose.model<ICoin>('Coin', CoinSchema);
 
 /* ================== REDIS ================== */
-const redis = process.env.UPSTASH_REDIS_URL
-  ? new Redis(process.env.UPSTASH_REDIS_URL)
+const redis = process.env.UPSTASH_REDIS_REST_URL
+  ? new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    })
   : null;
 
 /* ================== API KEY ================== */
@@ -70,10 +73,10 @@ const apiKeyMiddleware = (req: Request, res: Response, next: NextFunction) => {
 /* ================== UTILS ================== */
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
-/* ================== FETCH COINS SAFE ================== */
+/* ================== FETCH COINS ================== */
 async function fetchCoins(): Promise<number> {
   const coins: ICoin[] = [];
-  const totalPages = 90; // تقريباً 8900 coins
+  const totalPages = 90; // ~9000 coins
 
   for (let page = 1; page <= totalPages; page++) {
     const url =
@@ -84,11 +87,10 @@ async function fetchCoins(): Promise<number> {
     let success = false;
     let attempts = 0;
 
-    while (!success && attempts < 5) { // retry max 5 مرات
+    while (!success && attempts < 5) {
       try {
         const res = await fetch(url);
         if (!res.ok) throw new Error(`Blocked or error on page ${page}`);
-
         const data = (await res.json()) as any[];
         if (!data.length) {
           console.log(`⚠️ Page ${page} empty, stopping`);
@@ -110,7 +112,7 @@ async function fetchCoins(): Promise<number> {
         );
 
         console.log(`✅ Page ${page} fetched`);
-        await sleep(1500); // delay مهم لتجاوز rate limit
+        await sleep(1500); // pour éviter rate-limit
         success = true;
       } catch (err) {
         attempts++;
@@ -123,92 +125,106 @@ async function fetchCoins(): Promise<number> {
   await Coin.deleteMany({});
   await Coin.insertMany(coins);
 
-  if (redis) await redis.set('coins_all', JSON.stringify(coins), 'EX', 300);
+  if (redis) await redis.set('coins_all', JSON.stringify(coins), 'EX', 300); // cache 5 min
 
   console.log(`🔥 ${coins.length} coins saved`);
   return coins.length;
 }
 
 /* ================== CRON ================== */
+// Mise à jour toutes les 10 minutes
 cron.schedule('*/10 * * * *', async () => {
   console.log('⏱ Cron update started...');
-  await fetchCoins();
+  try {
+    await fetchCoins();
+  } catch (err) {
+    console.error('Cron fetch error:', err);
+  }
 });
 
 /* ================== ROUTES ================== */
-app.get('/health', (_req: Request, res: Response) => {
-  res.json({ status: 'ok' });
-});
+app.get('/health', (_req, res) => res.json({ status: 'ok' }));
 
 app.get('/coins', apiKeyMiddleware, async (req: Request, res: Response) => {
   const page = Number(req.query.page) || 1;
   const limit = Number(req.query.limit) || 100;
   const skip = (page - 1) * limit;
 
+  // Redis cache
+  if (redis) {
+    const cached = await redis.get(`coins_page_${page}_${limit}`);
+    if (cached) return res.json(JSON.parse(cached));
+  }
+
   const coins = await Coin.find({})
     .sort({ market_cap: -1 })
     .skip(skip)
     .limit(limit);
 
-  res.json({ page, limit, count: coins.length, data: coins });
+  const result = { page, limit, count: coins.length, data: coins };
+
+  if (redis) await redis.set(`coins_page_${page}_${limit}`, JSON.stringify(result), 'EX', 120); // 2 min cache
+
+  res.json(result);
 });
 
-/* ===== ADMIN : FETCH NOW ===== */
-app.get('/admin/fetch-now', async (_req: Request, res: Response) => {
+/* ADMIN ROUTES */
+app.get('/admin/fetch-now', async (_req, res) => {
   const count = await fetchCoins();
   res.json({ message: 'Fetch completed', count });
 });
 
-/* ===== ADMIN : ALL COINS ===== */
-app.get('/admin/coins/all', async (_req: Request, res: Response) => {
+app.get('/admin/coins/all', async (_req, res) => {
   const coins = await Coin.find({});
   res.json({ count: coins.length, data: coins });
 });
 
-/* ===== ADMIN : COUNT ===== */
-app.get('/admin/count', async (_req: Request, res: Response) => {
+app.get('/admin/count', async (_req, res) => {
   const count = await Coin.countDocuments();
   res.json({ count });
 });
 
-/* ================== SEARCH / GET COIN ================== */
-app.get('/coins/search',  async (req: Request, res: Response) => {
+/* SEARCH */
+app.get('/coins/search', async (req: Request, res: Response) => {
+  const { id, name } = req.query;
+  if (!id && !name) return res.status(400).json({ error: 'Provide id or name' });
+
   try {
-    const { id, name } = req.query;
-
-    if (!id && !name) {
-      return res.status(400).json({ error: 'Provide either id or name query parameter' });
-    }
-
-    let coin;
     if (id) {
-      coin = await Coin.findById(id as string);
-      if (!coin) return res.status(404).json({ error: 'Coin not found by id' });
-    } else if (name) {
-      const regex = new RegExp(`^${name}`, 'i'); // recherche insensitive
-      coin = await Coin.find({ name: regex }).limit(10); // max 10 résultats
-      if (!coin.length) return res.status(404).json({ error: 'Coin not found by name' });
+      const coin = await Coin.findById(id as string);
+      if (!coin) return res.status(404).json({ error: 'Not found' });
+      return res.json({ data: coin });
     }
 
-    res.json({ data: coin });
+    if (name) {
+      const regex = new RegExp(`^${name}`, 'i');
+      const coins = await Coin.find({ name: regex }).limit(10);
+      if (!coins.length) return res.status(404).json({ error: 'Not found' });
+      return res.json({ data: coins });
+    }
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Server error' });
+    return res.status(500).json({ error: 'Server error' });
   }
 });
 
+/* EXTERNAL API (Zyla / RapidAPI) */
 app.get('/api/external/:coin', async (req: Request, res: Response) => {
   try {
     const coin = req.params.coin;
-    const url = `https://api.zyla.com/coins/${coin}`; // exemple Zyla
-    // ou RapidAPI : const url = `https://example-rapidapi.com/coins/${coin}`;
 
-    const response = await fetch(url, {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000); // 5s timeout
+
+    const response = await fetch(`https://api.zyla.com/coins/${coin}`, {
+      signal: controller.signal,
       headers: {
         'X-RapidAPI-Key': process.env.RAPIDAPI_KEY || '',
         'X-RapidAPI-Host': 'example-rapidapi.com',
       },
     });
+
+    clearTimeout(timeout);
 
     if (!response.ok) throw new Error('Failed to fetch external API');
 
@@ -220,21 +236,25 @@ app.get('/api/external/:coin', async (req: Request, res: Response) => {
   }
 });
 
+/* DETAILS LOCAL + EXTERNAL */
 app.get('/coins/details/:coin', apiKeyMiddleware, async (req, res) => {
   try {
     const coinName = req.params.coin;
-
-    // 1️⃣ قلق على coin ف MongoDB
     const localCoin = await Coin.findOne({ name: new RegExp(`^${coinName}`, 'i') });
-    if (!localCoin) return res.status(404).json({ error: 'Coin not found locally' });
+    if (!localCoin) return res.status(404).json({ error: 'Local coin not found' });
 
-    // 2️⃣ fetch من Zyla API
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+
     const response = await fetch(`https://api.zyla.com/coins/${coinName}`, {
+      signal: controller.signal,
       headers: {
         'X-RapidAPI-Key': process.env.RAPIDAPI_KEY || '',
         'X-RapidAPI-Host': 'example-rapidapi.com',
       },
     });
+
+    clearTimeout(timeout);
     const externalData = await response.json();
 
     res.json({ local: localCoin, external: externalData });
@@ -244,8 +264,7 @@ app.get('/coins/details/:coin', apiKeyMiddleware, async (req, res) => {
   }
 });
 
-
 /* ================== START SERVER ================== */
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
