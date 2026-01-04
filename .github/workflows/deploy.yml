@@ -1,28 +1,31 @@
-name: Deploy Real-Time-Finance-Data
+name: Fly Deploy
 
 on:
   push:
     branches:
-      - main
+      - main   # se déclenche à chaque push sur main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build TypeScript
+      - name: Build project
         run: npx tsc
 
-      - name: Build Docker image
-        run: docker build -t real-time-finance-data .
+      - name: Deploy to Fly.io
+        uses: superfly/flyctl-actions@1.1
+        with:
+          args: "deploy --remote-only"
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
